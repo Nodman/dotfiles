@@ -1,125 +1,265 @@
-set encoding=utf-8
-
 call plug#begin('~/.vim/plugged')
+
+" [DRACULA THEME IS LOVE]: {
+  "-----------------------------------
+  Plug 'dracula/vim', {'as': 'dracula'}
+  "-----------------------------------
+" }
+"
+"
+"
+" [Best status line plugin, super minimal]: {
+  "--------------------------
   Plug 'itchyny/lightline.vim'
-  Plug 'itchyny/landscape.vim'
-  Plug 'maximbaz/lightline-ale'
+  "--------------------------
+  function! LightlineFilename()
+    let filename = expand(@%) !=# '' ? expand(@%) : '[No Name]'
+    let modified = &modified ? ' +' : ''
+    return filename . modified
+  endfunction
+
+  let g:lightline = {
+    \'colorscheme': 'one',
+    \'component_function': {
+      \'filename': 'LightlineFilename',
+    \},
+  \}
+  let g:lightline.component_expand = {
+    \'linter_checking': 'lightline#ale#checking',
+    \'linter_warnings': 'lightline#ale#warnings',
+    \'linter_errors': 'lightline#ale#errors',
+    \'linter_ok': 'lightline#ale#ok',
+  \}
+  let g:lightline.component_type = {
+    \'linter_checking': 'left',
+    \'linter_warnings': 'warning',
+    \'linter_errors': 'error',
+    \'linter_ok': 'left',
+  \}
+  let g:lightline.active = {
+    \'right': [
+      \['linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok'],
+      \['lineinfo'],
+      \['percent'],
+      \['fileencoding', 'filetype']
+    \],
+  \'left': [
+    \['mode', 'paste'],
+    \['readonly', 'filename']
+    \],
+  \}
+" }
+"
+"
+"
+" [Autocompletion and IDE like integrations, works with TSServer]: {
+  "---------------------------
   Plug 'Valloric/YouCompleteMe'
+  "---------------------------
+  let g:ycm_autoclose_preview_window_after_insertion = 1
+  let g:ycm_autoclose_preview_window_after_completion = 1
+  let g:ycm_key_list_stop_completion = ['<C-l>']
+  let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>', '<C-k>']
+  let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<C-j>']
+
+" }
+"
+"
+"
+" [Asynchronous Lint Engine]: {
+  "---------------------------
   Plug 'w0rp/ale'
-  "Plug 'editorconfig/editorconfig-vim' git magic, no need for now
-  Plug 'fatih/vim-go'
-  Plug 'keith/swift.vim'
-  Plug 'tpope/vim-fugitive'
+  Plug 'maximbaz/lightline-ale' "lightlin integratin
+  "---------------------------
+  "let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
+  let g:ale_lint_on_save = 1
+  let g:ale_lint_on_text_changed = 2
+  let g:ale_python_flake8_args="--ignore=E501"
+
+  let g:ale_linters = {
+    \'javascript': ['eslint'],
+    \'swift': ['swiftlint'],
+    \'python': ['mypy'],
+    \'typescript': ['tslint'],
+  \}
+
+  let g:ale_lint_on_save = 1
+  let g:ale_lint_on_text_changed = 1
+  let g:ale_sign_error = '!'
+  let g:ale_sign_warning = '?'
+" }
+"
+"
+"
+" [file explorer tree]: {
+  "---------------------------
+  Plug '~/.vim/bundle/nerdtree'
+  "---------------------------
+  let g:NERDTreeDirArrowExpandable = ''
+  let g:NERDTreeDirArrowCollapsible = ''
+  let g:NERDSpaceDelims = 1
+  let g:NERDDefaultAlign = 'left'
+  function! NERDTreeToggleInCurDir()
+    if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
+       exe ":NERDTreeClose"
+    else
+       if (expand("%:t") != '')
+          exe ":NERDTreeFind"
+       else
+          exe ":NERDTreeToggle"
+       endif
+    endif
+  endfunction
+" }
+"
+"
+" [window size managment]: {
+  "-----------------------
+  Plug 'roman/golden-ratio'
+  "-----------------------
+  let g:golden_ratio_exclude_nonmodifiable = 1
+  let g:golden_ratio_autocommand = 0
+" }
+"
+"
+"
+" [REPL]: {
+  "------------------------
+  Plug 'metakirby5/codi.vim'
+  "------------------------
+  let g:codi#autoclose = 1
+  let g:codi#width = 80
+  let g:codi#rightsplit = 0
+" }
+"
+"
+"
+" [Lines indentation]: {
+  "------------------------
+  Plug 'Yggdroot/indentLine'
+  "------------------------
+  let g:indentLine_fileTypeExclude = ['nerdtree']
+  let g:indentLine_leadingSpaceChar = '·'
+  let g:indentLine_leadingSpaceEnabled = 1
+  let g:indentLine_enabled= 0
+  "------------------------
+" }
+"
+"
+"
+" [Spell checking]: {
+  "-------------------------
+  Plug 'kamykn/spelunker.vim'
+  let g:spelunker_disable_auto_group = 1
+  " specify custom autogroup with file types you want to check:
+  augroup spelunker
+    autocmd!
+    autocmd BufWinEnter,BufWritePost ,*.js,*.jsx,*.json,*.md call spelunker#check()
+  augroup END
+  "-------------------------
+" }
+"
+"
+"
+  Plug 'tpope/vim-fugitive' " git
   Plug 'pangloss/vim-javascript'
   Plug 'mxw/vim-jsx'
-  "Plug 'dNitro/vim-pug-complete', { 'for': ['jade', 'pug'] }
-  Plug 'wakatime/vim-wakatime'
-  Plug 'mattn/webapi-vim'
-  Plug 'dracula/vim', { 'as': 'dracula' }
-  Plug 'airblade/vim-gitgutter'
+  Plug 'wakatime/vim-wakatime' "wakatime tracker
+  Plug 'mattn/webapi-vim' "Basic HTTP OAuth JSON Parser etc.
+  Plug 'airblade/vim-gitgutter' "git statuses on gutter
+  Plug 'junegunn/fzf.vim'  "Fast searches
   Plug '/usr/local/opt/fzf'
-  Plug 'junegunn/fzf.vim'
-  Plug '~/.vim/bundle/nerdtree'
-  Plug 'tpope/vim-surround'
-  Plug 'roman/golden-ratio'
-  Plug 'qpkorr/vim-bufkill'
-  Plug 'metakirby5/codi.vim'
-  Plug 'scrooloose/nerdcommenter'
-  Plug 'tmux-plugins/vim-tmux-focus-events'
-  Plug 'jiangmiao/auto-pairs'
-  Plug 'Yggdroot/indentLine'
-  Plug 'easymotion/vim-easymotion'
-  Plug 'kamykn/spelunker.vim'
-  "Plug 'kamykn/CCSpellCheck.vim'
-
-
+  Plug 'tpope/vim-surround' "you sould know this one
+  Plug 'qpkorr/vim-bufkill' "better buffer kill
+  Plug 'scrooloose/nerdcommenter' "easy commenting
+  Plug 'jiangmiao/auto-pairs' "insert or delete brackets, parens, quotes in pair.
+  Plug 'easymotion/vim-easymotion' "you should know this
+  Plug 'chrisbra/unicode.vim'
+  Plug 'mhinz/vim-startify' "better vim startup screen
+  Plug 'junegunn/goyo.vim' "ZEN mode
+  " Plug 'tmux-plugins/vim-tmux-focus-events'
+  " Plug 'dNitro/vim-pug-complete', { 'for': ['jade', 'pug'] }
+  " Plug 'editorconfig/editorconfig-vim' git magic, no need for now
+  " Plug 'ryanoasis/vim-devicons'
+  " Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 call plug#end()
-
-
-" aotoexec {
-  "autocmd VimEnter * silent !tmux set -g status off
-  "autocmd VimEnter * silent !tmux set -g pane-border-status off
-  " autocmd VimLeave * silent !tmux set -g status on
-  "autocmd VimLeave * silent !tmux set -g pane-border-status bottom
-  "au FocusLost * :set laststatus=0
-  "au FocusGained * :set laststatus=2
-  "autocmd InsertLeave * redraw!
-" }
-
-" UI {
+"
+"-------------------------------------------------------------------
+"-------------------------------------------------------------------
+"
+" [UI setup]: {
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
   let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+  let g:drc = {
+    \'gui': {
+      \'normal': '#f8f8f3',
+      \'magenta': '#ff79c6',
+      \'purple': '#bd93f9',
+      \'blue': '#6272a4',
+    \},
+    \'cterm': {
+      \'normal': '231',
+      \'magenta': '212',
+      \'purple': '141',
+      \'blue': '61',
+    \}
+  \}
+  let g:devicons_colors = {
+    \'blue': ['', ''],
+  \}
   set termguicolors
   set background=dark
-  color dracula
   set guioptions-=m " Removes top menubar
   set guioptions-=T " Removes top toolbar
   set guioptions-=r " Removes right hand scroll bar
   set go-=L " Removes left hand scroll bar
   set laststatus=2
   set cursorline
-  let g:lightline = {
-      \    'colorscheme': 'one',
-      \    'component_function': {
-      \      'filename': 'LightlineFilename',
-      \      'spotify': 'Spotify',
-      \    },
-      \ }
-  let g:lightline.component_expand = {
-      \    'linter_checking': 'lightline#ale#checking',
-      \    'linter_warnings': 'lightline#ale#warnings',
-      \    'linter_errors': 'lightline#ale#errors',
-      \    'linter_ok': 'lightline#ale#ok',
-      \ }
-  let g:lightline.component_type = {
-      \    'linter_checking': 'left',
-      \    'linter_warnings': 'warning',
-      \    'linter_errors': 'error',
-      \    'linter_ok': 'left',
-      \   }
-  let g:lightline.active = {
-      \   'right': [
-      \      [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
-      \      [ 'lineinfo' ],
-      \      [ 'percent' ],
-      \      [ 'fileencoding', 'filetype' ]
-      \   ],
-      \   'left': [
-      \      [ 'mode', 'paste' ],
-      \      [ 'readonly', 'filename' ]
-      \   ],
-      \ }
-
-
-  let g:indentLine_leadingSpaceChar = '·'
-  let g:indentLine_leadingSpaceEnabled = 1
-  let g:indentLine_enabled= 0
-  let g:indentLine_fileTypeExclude = ['nerdtree']
-  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-  let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
-  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+  color dracula
+  " tiny separator
+  set fillchars+=vert:⎹
+  hi foldcolumn guibg=bg
+  hi VertSplit guibg=#3e4452 guifg=bg
+  hi Directory guifg=#f8f8f3 ctermfg=231
+  hi Directory gui=bold cterm=bold
+  function! DeviconsColors(config)
+    let colors = keys(a:config)
+    augroup devicons_colors
+      autocmd!
+      for color in colors
+        exec 'autocmd FileType nerdtree,startify highlight devicons_'.color.' guifg='.g:drc.gui[color].' ctermfg='.g:drc.cterm[color]
+        exec 'autocmd FileType nerdtree,startify syntax match devicons_'.color.' /\v'.join(a:config[color], '|').'/ containedin=ALL'
+      endfor
+    augroup END
+  endfunction
+  call DeviconsColors(g:devicons_colors)
 " }
 
-" Keys, maps {
-  " Map ; to :
+
+" [Keys, mappings]: {
+  " faster enter command
   nnoremap ; :
   " Toggle between normal and relative numbering.
   nnoremap <leader>r :call NumberToggle()<cr>
-
-  " Sets a status line. If in a Git repository, shows the current branch.
-  " Also shows the current file name, line and column number.
- "love spacemacs
+  " spacemacs like keys
   let mapleader=" "
-  "inoremap <expr> <C-j> ((pumvisible())?("\<C-n>"):("<C-j>"))
-  "inoremap <expr> <C-j> ((pumvisible())?("\<C-n>"):("<C-j>"))
-  "noremap <expr> <C-k> ((pumvisible())?("\<C-p>"):("<C-k>"))
-  "noremap <expr> <C-k> ((pumvisible())?("\<C-p>"):("<C-k>"))
+  map <C-p> <Nop>
+  map <C-n> <Nop>
+  " vimrc
+  map <leader>fed :e $MYVIMRC<CR>
+  map <leader>feR :source $MYVIMRC<CR>
+
+  imap <C-p> <Nop>
+  imap <C-k> <Nop>
+
   noremap <Leader>pt :call NERDTreeToggleInCurDir()<CR>
   noremap <Leader>sc :nohl<CR>
   noremap <Leader>pf :GFiles<CR>
   noremap <Leader>ps :Ag!<CR>
   noremap <Leader>pS :Ag! <cword><CR>
-  vnoremap <Leader>ps :<C-u>Agv!<CR>
   noremap <Leader>ff :Files<CR>
   noremap <Leader>bb :Buffers<CR>
   noremap <Leader>bs :enew<CR>
@@ -143,39 +283,65 @@ call plug#end()
   noremap <Leader>L :vertical resize -5<CR>
   noremap <Leader>fs :w<CR>
   noremap gt :NERDTreeFind<CR>
+  noremap <Leader>Tz :Goyo 140<CR>
+
   nnoremap <leader>Tm :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
+
+  vnoremap <TAB> :YcmCompleter Format<CR>
+  vnoremap <Leader>ps :<C-u>Agv!<CR>
+  vnoremap // y/\V<C-r>=escape(@",'/\')<CR><CR>
+  " dont loose selection
   vmap < <gv
   vmap > >gv
-
-  let g:ycm_key_list_stop_completion = ['<C-l>']
-  let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>', '<C-k>']
-  let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<C-j>']
-
-  " I hate C-p
-  map <C-p> <Nop>
-  map <C-n> <Nop>
-  imap <C-p> <Nop>
-  imap <C-k> <Nop>
-
-  "vimrc
-  map <leader>fed :e $MYVIMRC<CR>
-  map <leader>feR :source $MYVIMRC<CR>
-
-  " <TAB>: completion.
-  "inoremap <expr><TAB>  pumvisible() ? '\<C-n>' : '\<TAB>'
-
-  "Copy and paste from system clipboard
-  "vnoremap <TAB> :YcmCompleter Format<CR>
-  vnoremap <TAB> :YcmCompleter Format<CR>
+  " Copy and paste from system clipboard
   vmap <Leader>sy "+y
   vmap <Leader>d "+d
+
   nmap <Leader>sp "+p
   nmap <Leader>sP "+P
   nmap <silent> <Leader>ep <Plug>(ale_previous_wrap)
-
   nmap <silent> <Leader>en <Plug>(ale_next_wrap)
+  " maximize window
   nmap <Leader>wm <Plug>(golden_ratio_resize)
-  "command! -bang -nargs=* Ag call fzf#vim#ag(<q-args>, {'options': '--delimiter : --nth 4..'}, <bang>0)
+" }
+"
+"
+" [per filetype settings]: {
+  let g:jsx_ext_required = 0
+  let g:typescript_compiler_binary = 'tsc'
+  autocmd FileType javascript nmap <buffer> gf :YcmCompleter GoTo<CR>
+  autocmd FileType javascript nmap <buffer> gd :YcmCompleter GoToDeclaration<CR>
+  autocmd FileType javascript nmap <buffer> gr :YcmCompleter GoToReferences<CR>
+  autocmd FileType javascript setlocal expandtab sw=2 ts=2 sts=2
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+  autocmd Filetype gitcommit setlocal textwidth=72
+  autocmd FileType go set sw=4
+  autocmd FileType go set tabstop=4
+  autocmd FileType go set sts=0
+  autocmd FileType go set expandtab
+  autocmd FileType go set smarttab
+  autocmd FileType json setlocal expandtab sw=2 ts=2 sts=2
+  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+  autocmd FileType p/ython setlocal expandtab sw=4 ts=4 sts=4
+  autocmd BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix
+  autocmd FileType c setlocal expandtab sw=2 ts=2 sts=2
+  autocmd BufNewFile,BufReadPost *.jade set filetype=pug
+  autocmd FileType jade setlocal expandtab sw=2 ts=2 sts=2
+  augroup filetype
+   au! BufRead,BufNewFile *.proto setfiletype proto
+  augroup end
+  autocmd FileType css setlocal expandtab sw=2 ts=2 sts=2
+  autocmd FileType css set ft=scss
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+  autocmd FileType less setlocal expandtab sw=2 ts=2 sts=2
+  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+  autocmd FileType html setlocal expandtab sw=2 ts=2 sts=2
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+" }
+"
+"
+"
+" [FZF custom setup]: {
   command! -bang -nargs=* Ag
   \ call fzf#vim#ag(<q-args>,
   \                 <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
@@ -186,37 +352,10 @@ call plug#end()
   \                 <bang>0 ? fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'up:60%')
   \                         : fzf#vim#with_preview({'options': '--delimiter : --nth 4..'}, 'right:50%:hidden', '?'),
   \                 <bang>0)
-  "" }
-"
-" YCM {
-  let g:ycm_autoclose_preview_window_after_insertion = 1
-  let g:ycm_autoclose_preview_window_after_completion = 1
-" }
-" ALE {
-  let g:ale_lint_on_save = 1
-  let g:ale_lint_on_text_changed = 2
-  "let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
-  let g:ale_python_flake8_args="--ignore=E501"
-
-  let g:ale_linters = {
-  \   'javascript': ['eslint'],
-  \   'swift': ['swiftlint'],
-  \   'python': ['mypy'],
-  \   'typescript': ['tslint'],
-  \}
-
-  let g:ale_python_pylint_args="--load-plugins pylint_django"
-
-  let g:ale_lint_on_save = 1
-  let g:ale_lint_on_text_changed = 1
-  let g:ale_sign_error = '!'
-  let g:ale_sign_warning = '?'
 " }
 
-" General {
-  let g:codi#autoclose = 1
-  let g:codi#width = 80
-  let g:codi#rightsplit = 0
+" [general settings]: {
+  set diffopt+=iwhite
   set signcolumn=yes
   set number
   set noshowmode
@@ -259,7 +398,6 @@ call plug#end()
   set splitbelow          " Horizontal split below current.
   set splitright          " Vertical split to right of current.
   set autoread            " If file updates, load automatically.
-  " Reload vim whenever the config files changes
 
   set display+=lastline
   set nostartofline       " Do not jump to first character with page commands.
@@ -278,20 +416,6 @@ call plug#end()
   highlight ExtraWhitespace ctermfg=darkgray
   "match ExtraWhitespace /\s\+$\|\t/
   match ExtraWhitespace /\s\+$/
-" }
-
-" Configuration {
-  let g:golden_ratio_exclude_nonmodifiable = 1
-  let g:golden_ratio_autocommand = 0
-  if has('autocmd')
-    filetype plugin indent on
-  endif
-  let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
-  let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
-  if has('path_extra')
-    setglobal tags-=./tags tags^=./tags;
-  endif
-
   " Remove special characters for filename
   set isfname-=:
   set isfname-==
@@ -318,7 +442,15 @@ call plug#end()
   endif
   set sessionoptions-=options
 
+  if has('autocmd')
+    filetype plugin indent on
+  endif
 
+  let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+  let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+  if has('path_extra')
+    setglobal tags-=./tags tags^=./tags;
+  endif
 
   " Remove trailing spaces before saving text files
   " http://vim.wikia.com/wiki/Remove_trailing_spaces
@@ -338,95 +470,27 @@ call plug#end()
     endif
   endfunction
 
-  " Diff options
-  set diffopt+=iwhite
+  "exit vim if NERDTree is last buffer
+  autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+  set wildignore+=*/node_modules/*,*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite,package-lock.json
 " }
-
-" Languages {
- let g:spelunker_disable_auto_group = 1
-" specify custom autogroup with file types you want to check:
-  augroup spelunker
-    autocmd!
-    autocmd BufWinEnter,BufWritePost ,*.js,*.jsx,*.json,*.md call spelunker#check()
-  augroup END
-  autocmd Filetype gitcommit setlocal textwidth=72
-  autocmd FileType go set sw=4
-  autocmd FileType go set tabstop=4
-  autocmd FileType go set sts=0
-  autocmd FileType go set expandtab
-  autocmd FileType go set smarttab
-  autocmd FileType javascript setlocal expandtab sw=2 ts=2 sts=2
-  autocmd FileType javascript nmap <buffer> gf :YcmCompleter GoTo<CR>
-  autocmd FileType javascript nmap <buffer> gd :YcmCompleter GoToDeclaration<CR>
-  autocmd FileType javascript nmap <buffer> gr :YcmCompleter GoToReferences<CR>
-  autocmd FileType json setlocal expandtab sw=2 ts=2 sts=2
-  autocmd FileType p/ython setlocal expandtab sw=4 ts=4 sts=4
-  autocmd FileType c setlocal expandtab sw=2 ts=2 sts=2
-  autocmd FileType php setlocal expandtab sw=2 ts=2 sts=2
-  autocmd BufNewFile,BufReadPost *.jade set filetype=pug
-  autocmd FileType html setlocal expandtab sw=2 ts=2 sts=2
-  autocmd FileType jade setlocal expandtab sw=2 ts=2 sts=2
-  autocmd FileType less setlocal expandtab sw=2 ts=2 sts=2
-  autocmd FileType htmldjango setlocal expandtab sw=2 ts=2 sts=2
-  autocmd FileType css setlocal expandtab sw=2 ts=2 sts=2
-  autocmd FileType css set ft=scss
-  au FileType go nmap <Leader>i <Plug>(go-info)
-  au FileType go nmap <Leader>gd <Plug>(go-doc)
-  au FileType go nmap <Leader>r <Plug>(go-run)
-  au FileType go nmap <Leader>b <Plug>(go-build)
-  au FileType go nmap <Leader>t <Plug>(go-test)
-  au FileType go nmap gd <Plug>(go-def-tab)
-  augroup filetype
-   au! BufRead,BufNewFile *.proto setfiletype proto
-  augroup end
-  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-  autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-  autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-  autocmd BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix
-
-  " Vim-Go related Settings
-  "let g:go_errcheck_bin="/Users/vinitkumar/go/bin/errcheck"
-  "let g:go_golint_bin="/Users/vinitkumar/go/bin/golint"
-  let g:go_fmt_command = "goimports"
-  let g:go_fmt_autosave = 1
-  let g:github_upstream_issues = 1
-  let g:go_disable_autoinstall = 0
-  let g:jsx_ext_required = 0
-  let g:typescript_compiler_binary = 'tsc'
-" }
-
+"
+"
+"
+" [Functions]: {
+"
 " Relative numbering
-function! NumberToggle()
-  if(&relativenumber == 1)
-    set nornu
-    set number
-  else
-    set rnu
-  endif
-endfunc
+  function! NumberToggle()
+    if(&relativenumber == 1)
+      set nornu
+      set number
+    else
+      set rnu
+    endif
+  endfunc
 
-function! NERDTreeToggleInCurDir()
-  " If NERDTree is open in the current buffer
-  if (exists("t:NERDTreeBufName") && bufwinnr(t:NERDTreeBufName) != -1)
-     exe ":NERDTreeClose"
-  else
-     if (expand("%:t") != '')
-        exe ":NERDTreeFind"
-     else
-        exe ":NERDTreeToggle"
-     endif
-  endif
-endfunction
-
-function! LightlineFilename()
-  let filename = expand(@%) !=# '' ? expand(@%) : '[No Name]'
-  let modified = &modified ? ' +' : ''
-  return filename . modified
-endfunction
-
-function! GetVisualSelection()
+  function! GetVisualSelection()
     " Why is this not a built-in Vim script function?!
     let [line_start, column_start] = getpos("'<")[1:2]
     let [line_end, column_end] = getpos("'>")[1:2]
@@ -437,17 +501,15 @@ function! GetVisualSelection()
     let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
     let lines[0] = lines[0][column_start - 1:]
     return join(lines, "\n")
-endfunction
-
-"function! Spotify()
-    ":let status = system("osascript " . shellescape(expand("~/applescript/spotify.scpt")))
-    "return status
-"endfunction
-
-command! Wipe :bufdo BD
-command! Node :badd node-repl.js | buffer node-repl.js | Codi javascript
-command! Js :set ft=javascript
-command! Css :set ft=css
-
-set wildignore+=*/node_modules/*,*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite,package-lock.json
+  endfunction
+" }
+"
+"
+"
+" [custom commands]: {
+  command! Wipe :bufdo BD "Wipe all buffers
+  command! Node :badd node-repl.js | buffer node-repl.js | Codi javascript "Start node repl with Codi
+  command! Js :set ft=javascript
+  command! Css :set ft=css
+" }
 
