@@ -1,3 +1,5 @@
+git pull;
+
 cp ~/.zshrc ./zsh/;
 
 cp ~/.vimrc ./vim/;
