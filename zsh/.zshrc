@@ -1,11 +1,16 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# Path to your oh-my-zsh installation.
 # Greetings
 echo "May the force be with you, `logname`!"
-
 export LC_ALL=en_GB
 export ZSH=/Users/spooner/.oh-my-zsh
+
+# Set name of the theme to load. Optionally, if you set this to "random"
+# it'll load a random theme each time that oh-my-zsh is loaded.
+# See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+# ZSH_THEME="refined"
 
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -40,6 +45,8 @@ alias py3="python3"
 alias tmux="tmux -u"
 alias ssh='TERM=xterm-256color ssh'
 alias s="spotify"
+alias vim="nvim"
+alias vi="nvim"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
@@ -48,6 +55,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export PATH="/usr/local/opt/openssl/bin:$PATH"
+export EDITOR="nvim"
 
 findr(){
   find $1 -name "$2" | xargs rm

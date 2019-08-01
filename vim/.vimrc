@@ -85,8 +85,8 @@ call plug#begin('~/.vim/plugged')
 
   let g:ale_lint_on_save = 1
   let g:ale_lint_on_text_changed = 1
-  let g:ale_sign_error = '!'
-  let g:ale_sign_warning = '?'
+  let g:ale_sign_error = ' '
+  let g:ale_sign_warning = ' '
 " }
 "
 "
@@ -142,7 +142,6 @@ call plug#begin('~/.vim/plugged')
   let g:indentLine_leadingSpaceChar = '·'
   let g:indentLine_leadingSpaceEnabled = 1
   let g:indentLine_enabled= 0
-  "------------------------
 " }
 "
 "
@@ -150,13 +149,26 @@ call plug#begin('~/.vim/plugged')
 " [Spell checking]: {
   "-------------------------
   Plug 'kamykn/spelunker.vim'
+  "-------------------------
   let g:spelunker_disable_auto_group = 1
   " specify custom autogroup with file types you want to check:
   augroup spelunker
     autocmd!
     autocmd BufWinEnter,BufWritePost ,*.js,*.jsx,*.json,*.md call spelunker#check()
   augroup END
-  "-------------------------
+" }
+"
+"
+"
+" [git file diff status on gutter]: {
+  "---------------------------
+  Plug 'airblade/vim-gitgutter'
+  "---------------------------
+  let g:gitgutter_sign_added = ' '
+  let g:gitgutter_sign_modified = ' '
+  let g:gitgutter_sign_removed = ' '
+  let g:gitgutter_sign_removed_first_line = ' '
+  let g:gitgutter_sign_modified_removed = ' '
 " }
 "
 "
@@ -166,7 +178,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'mxw/vim-jsx'
   Plug 'wakatime/vim-wakatime' "wakatime tracker
   Plug 'mattn/webapi-vim' "Basic HTTP OAuth JSON Parser etc.
-  Plug 'airblade/vim-gitgutter' "git statuses on gutter
   Plug 'junegunn/fzf.vim'  "Fast searches
   Plug '/usr/local/opt/fzf'
   Plug 'tpope/vim-surround' "you sould know this one
@@ -191,14 +202,15 @@ call plug#end()
   let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
   let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
   let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
-  let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
-  let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   let g:drc = {
     \'gui': {
       \'normal': '#f8f8f3',
       \'magenta': '#ff79c6',
       \'purple': '#bd93f9',
       \'blue': '#6272a4',
+      \'grey': '#3e4452'
     \},
     \'cterm': {
       \'normal': '231',
@@ -221,9 +233,12 @@ call plug#end()
   color dracula
   " tiny separator
   set fillchars+=vert:⎹
+  " set fillchars+=vert:⎸
   hi foldcolumn guibg=bg
-  hi VertSplit guibg=#3e4452 guifg=bg
-  hi Directory guifg=#f8f8f3 ctermfg=231
+  "this fixes nerdtree partial highlight in neovim
+  " hi NERDTreeFile guibg=none
+  exe 'hi VertSplit guibg='drc.gui.blue.' guifg=bg'
+  exe 'hi Directory guifg='drc.gui.normal.' ctermfg='drc.cterm.normal
   hi Directory gui=bold cterm=bold
   function! DeviconsColors(config)
     let colors = keys(a:config)
@@ -389,7 +404,7 @@ call plug#end()
   set tabstop=2           " Render TABs using this many spaces.
   set shiftwidth=2        " Indentation amount for < and > commands.
   set noerrorbells        " No beeps.
-  set esckeys             " Cursor keys in insert mode.
+  " set esckeys             " Cursor keys in insert mode.
   set linespace=0         " Set line-spacing to minimum.
   set nojoinspaces        " Prevents inserting two spaces after punctuation on a join (J)
   set list
