@@ -1,7 +1,7 @@
 cp ~/.zshrc ./zsh/;
 
 cp ~/.vimrc ./vim/;
-cp ~/.config/nvim/init.vim;
+cp ~/.config/nvim/init.vim ./vim;
 
 cp ~/.tmux.conf ./tmux/;
 
