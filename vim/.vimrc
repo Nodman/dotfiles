@@ -138,7 +138,7 @@ call plug#begin('~/.vim/plugged')
   "------------------------
   Plug 'Yggdroot/indentLine'
   "------------------------
-  let g:indentLine_fileTypeExclude = ['nerdtree']
+  let g:indentLine_fileTypeExclude = ['nerdtree', 'json']
   let g:indentLine_leadingSpaceChar = '·'
   let g:indentLine_leadingSpaceEnabled = 1
   let g:indentLine_enabled= 0
@@ -416,6 +416,7 @@ call plug#end()
 
   set display+=lastline
   set nostartofline       " Do not jump to first character with page commands.
+  set wildignore+=*/node_modules/*,*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite,package-lock.json
 
   if &encoding ==# 'latin1' && has('gui_running')
     set encoding=utf-8
@@ -488,7 +489,6 @@ call plug#end()
   "exit vim if NERDTree is last buffer
   autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-  set wildignore+=*/node_modules/*,*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite,package-lock.json
 " }
 "
 "
