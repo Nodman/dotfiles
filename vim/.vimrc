@@ -222,6 +222,8 @@ call plug#end()
   let g:devicons_colors = {
     \'blue': ['', ''],
   \}
+
+
   set termguicolors
   set background=dark
   set guioptions-=m " Removes top menubar
@@ -233,12 +235,15 @@ call plug#end()
   color dracula
   " tiny separator
   set fillchars+=vert:⎹
+  set fillchars+=vert:⎹
   " set fillchars+=vert:⎸
   hi foldcolumn guibg=bg
   "this fixes nerdtree partial highlight in neovim
   " hi NERDTreeFile guibg=none
-  exe 'hi VertSplit guibg='drc.gui.blue.' guifg=bg'
-  exe 'hi Directory guifg='drc.gui.normal.' ctermfg='drc.cterm.normal
+  exe 'hi VertSplit guibg='.drc.gui.blue.' guifg=bg'
+  exe 'hi Directory guifg='.drc.gui.normal.' ctermfg='.drc.cterm.normal
+  exe 'hi NERDTreeCWD guifg='.drc.gui.blue.' ctermfg='.drc.cterm.blue
+  hi NERDTreeCWD gui=bold cterm=bold
   hi Directory gui=bold cterm=bold
   function! DeviconsColors(config)
     let colors = keys(a:config)
@@ -527,4 +532,3 @@ call plug#end()
   command! Js :set ft=javascript
   command! Css :set ft=css
 " }
-
