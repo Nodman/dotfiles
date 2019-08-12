@@ -18,6 +18,7 @@ export ZSH=/Users/spooner/.oh-my-zsh
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
+  gitfast
   osx
   compleat
   npm
@@ -64,4 +65,22 @@ findr(){
 RPS1=""
 export FZF_DEFAULT_COMMAND='ag --nocolor --path-to-ignore ~/.ignore -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+_fzf_complete_git() {
+    ARGS="$@"
+    local branches
+    branches=$(git branch -vv) # --all for all branches
+    if [[ $ARGS == 'git co'* ]]; then
+        _fzf_complete "--reverse --multi" "$@" < <(
+            echo $branches
+        )
+    else
+        eval "zle ${fzf_default_completion:-expand-or-complete}"
+    fi
+}
+
+_fzf_complete_git_post() {
+  awk '{print $1}'
+}
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -17,5 +17,5 @@ cp ~/bin/spotify.sh ./bin;
 
 cp ~/applescript/spotify.scpt ./applescript;
 
-git commit -am "sync";
+git commit -am "$@";
 git push;

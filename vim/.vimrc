@@ -11,7 +11,12 @@ call plug#begin('~/.vim/plugged')
 " [Best status line plugin, super minimal]: {
   "--------------------------
   Plug 'itchyny/lightline.vim'
+  " lightline coc integration
+  Plug '~/.vim/bundle/lightline-coc'
   "--------------------------
+  let g:lightline#coc#indicator_warnings = ' '
+  let g:lightline#coc#indicator_errors = ' '
+
   function! LightlineFilename()
     let filename = expand(@%) !=# '' ? expand(@%) : '[No Name]'
     let modified = &modified ? ' +' : ''
@@ -24,71 +29,96 @@ call plug#begin('~/.vim/plugged')
       \'filename': 'LightlineFilename',
     \},
   \}
+
   let g:lightline.component_expand = {
-    \'linter_checking': 'lightline#ale#checking',
-    \'linter_warnings': 'lightline#ale#warnings',
-    \'linter_errors': 'lightline#ale#errors',
-    \'linter_ok': 'lightline#ale#ok',
-  \}
+      \  'linter_warnings': 'lightline#coc#warnings',
+      \  'linter_errors': 'lightline#coc#errors',
+      \ }
   let g:lightline.component_type = {
-    \'linter_checking': 'left',
-    \'linter_warnings': 'warning',
-    \'linter_errors': 'error',
-    \'linter_ok': 'left',
-  \}
+      \     'linter_warnings': 'warning',
+      \     'linter_errors': 'error',
+      \ }
+
+
   let g:lightline.active = {
     \'right': [
-      \['linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok'],
+      \['linter_errors', 'linter_warnings', 'linter_ok'],
       \['lineinfo'],
       \['percent'],
       \['fileencoding', 'filetype']
     \],
-  \'left': [
-    \['mode', 'paste'],
-    \['readonly', 'filename']
+    \'left': [
+      \['mode', 'paste'],
+      \['readonly', 'filename', 'stat']
     \],
   \}
 " }
 "
 "
 "
-" [Autocompletion and IDE like integrations, works with TSServer]: {
+" [COC: YCM/ALE Alternative, autocompletion linting and more]: {
   "---------------------------
-  Plug 'Valloric/YouCompleteMe'
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
   "---------------------------
-  let g:ycm_autoclose_preview_window_after_insertion = 1
-  let g:ycm_autoclose_preview_window_after_completion = 1
-  let g:ycm_key_list_stop_completion = ['<C-l>']
-  let g:ycm_key_list_previous_completion = ['<S-TAB>', '<Up>', '<C-k>']
-  let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<C-j>']
+  " if hidden is not set, TextEdit might fail.
+  set hidden
+  " Some servers have issues with backup files, see #649
+  set nobackup
+  set nowritebackup
+  "
+  " " You will have bad experience for diagnostic messages when it's default
+  " 4000.
+  set updatetime=300
 
+  "Close preview window when completion is done.
+  autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
+
+  " Highlight symbol under cursor on CursorHold
+  autocmd CursorHold * silent call CocActionAsync('highlight')
+  " Use tab for trigger completion with characters ahead and navigate.
+  " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+  "
+  " noremap <expr> <C-n> pumvisible() ? "" : "\<C-n>"
+  imap <C-p> <Nop>
+  imap <C-n> <Nop>
+  " inoremap <expr> <C-p> pumvisible() ? "" : "\<C-p>"
+  " inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<C-k>"
+  "
+  inoremap <silent><expr> <TAB>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<TAB>" :
+        \ coc#refresh()
+  inoremap <silent><expr> <C-j>
+        \ pumvisible() ? "\<C-n>" :
+        \ <SID>check_back_space() ? "\<C-j>" :
+        \ coc#refresh()
+  inoremap <expr><C-k> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+  function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~# '\s'
+  endfunction
+
+  " Use <cl> to confirm completion, `<C-g>u` means break undo chain at current position.
+  inoremap <expr> <C-l> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+  nmap <silent> gd <Plug>(coc-definition)
+  nmap <silent> gy <Plug>(coc-type-definition)
+  nmap <silent> gi <Plug>(coc-implementation)
+  nmap <silent> gr <Plug>(coc-references)
+  " Remap for format selected region
+  xmap <TAB>  <Plug>(coc-format-selected)
+  nmap <TAB>  <Plug>(coc-format-selected)
+  " Use K to show documentation in preview window
+  nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+  function! s:show_documentation()
+    if (index(['vim','help'], &filetype) >= 0)
+      execute 'h '.expand('<cword>')
+    else
+      call CocAction('doHover')
+    endif
+  endfunction
 " }
-"
-"
-"
-" [Asynchronous Lint Engine]: {
-  "---------------------------
-  Plug 'w0rp/ale'
-  Plug 'maximbaz/lightline-ale' "lightlin integratin
-  "---------------------------
-  "let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
-  let g:ale_lint_on_save = 1
-  let g:ale_lint_on_text_changed = 2
-  let g:ale_python_flake8_args="--ignore=E501"
-
-  let g:ale_linters = {
-    \'javascript': ['eslint'],
-    \'swift': ['swiftlint'],
-    \'python': ['mypy'],
-    \'typescript': ['tslint'],
-  \}
-
-  let g:ale_lint_on_save = 1
-  let g:ale_lint_on_text_changed = 1
-  let g:ale_sign_error = ' '
-  let g:ale_sign_warning = ' '
-" }
-"
 "
 "
 " [file explorer tree]: {
@@ -210,17 +240,17 @@ call plug#end()
       \'magenta': '#ff79c6',
       \'purple': '#bd93f9',
       \'blue': '#6272a4',
-      \'grey': '#3e4452'
+      \'grey': '#3e4452',
+      \'lightgreen': '#98c379'
     \},
     \'cterm': {
       \'normal': '231',
       \'magenta': '212',
       \'purple': '141',
       \'blue': '61',
+      \'gray': '239',
+      \'lightgreen': '150'
     \}
-  \}
-  let g:devicons_colors = {
-    \'blue': ['', ''],
   \}
 
 
@@ -234,28 +264,26 @@ call plug#end()
   set cursorline
   color dracula
   " tiny separator
-  set fillchars+=vert:⎹
-  set fillchars+=vert:⎹
+  " set fillchars+=vert:⎹
   " set fillchars+=vert:⎸
+
+  " remove ~ at the end of the bufer
+  set fillchars+=vert: 
+  set fcs=eob: 
   hi foldcolumn guibg=bg
-  "this fixes nerdtree partial highlight in neovim
-  " hi NERDTreeFile guibg=none
-  exe 'hi VertSplit guibg='.drc.gui.blue.' guifg=bg'
-  exe 'hi Directory guifg='.drc.gui.normal.' ctermfg='.drc.cterm.normal
-  exe 'hi NERDTreeCWD guifg='.drc.gui.blue.' ctermfg='.drc.cterm.blue
+
+  "colors finetune
+  exe 'hi VertSplit guibg=bg guifg=bg'
+  exe 'hi Directory guifg='.g:drc.gui.normal.' ctermfg='.g:drc.cterm.normal
+  exe 'hi NERDTreeCWD guifg='.g:drc.gui.blue.' ctermfg='.g:drc.cterm.blue
+
   hi NERDTreeCWD gui=bold cterm=bold
   hi Directory gui=bold cterm=bold
-  function! DeviconsColors(config)
-    let colors = keys(a:config)
-    augroup devicons_colors
-      autocmd!
-      for color in colors
-        exec 'autocmd FileType nerdtree,startify highlight devicons_'.color.' guifg='.g:drc.gui[color].' ctermfg='.g:drc.cterm[color]
-        exec 'autocmd FileType nerdtree,startify syntax match devicons_'.color.' /\v'.join(a:config[color], '|').'/ containedin=ALL'
-      endfor
-    augroup END
-  endfunction
-  call DeviconsColors(g:devicons_colors)
+
+  let g:devicons_colors = {
+    \'blue': ['', '']
+  \}
+
 " }
 
 
@@ -266,14 +294,9 @@ call plug#end()
   nnoremap <leader>r :call NumberToggle()<cr>
   " spacemacs like keys
   let mapleader=" "
-  map <C-p> <Nop>
-  map <C-n> <Nop>
   " vimrc
   map <leader>fed :e $MYVIMRC<CR>
   map <leader>feR :source $MYVIMRC<CR>
-
-  imap <C-p> <Nop>
-  imap <C-k> <Nop>
 
   noremap <Leader>pt :call NERDTreeToggleInCurDir()<CR>
   noremap <Leader>sc :nohl<CR>
@@ -307,7 +330,6 @@ call plug#end()
 
   nnoremap <leader>Tm :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<CR>
 
-  vnoremap <TAB> :YcmCompleter Format<CR>
   vnoremap <Leader>ps :<C-u>Agv!<CR>
   vnoremap // y/\V<C-r>=escape(@",'/\')<CR><CR>
   " dont loose selection
@@ -319,8 +341,6 @@ call plug#end()
 
   nmap <Leader>sp "+p
   nmap <Leader>sP "+P
-  nmap <silent> <Leader>ep <Plug>(ale_previous_wrap)
-  nmap <silent> <Leader>en <Plug>(ale_next_wrap)
   " maximize window
   nmap <Leader>wm <Plug>(golden_ratio_resize)
 " }
@@ -329,9 +349,6 @@ call plug#end()
 " [per filetype settings]: {
   let g:jsx_ext_required = 0
   let g:typescript_compiler_binary = 'tsc'
-  autocmd FileType javascript nmap <buffer> gf :YcmCompleter GoTo<CR>
-  autocmd FileType javascript nmap <buffer> gd :YcmCompleter GoToDeclaration<CR>
-  autocmd FileType javascript nmap <buffer> gr :YcmCompleter GoToReferences<CR>
   autocmd FileType javascript setlocal expandtab sw=2 ts=2 sts=2
   autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
   autocmd Filetype gitcommit setlocal textwidth=72
@@ -501,7 +518,7 @@ call plug#end()
 " [Functions]: {
 "
 " Relative numbering
-  function! NumberToggle()
+  function! s:NumberToggle()
     if(&relativenumber == 1)
       set nornu
       set number
@@ -510,7 +527,20 @@ call plug#end()
     endif
   endfunc
 
-  function! GetVisualSelection()
+  function! s:DeviconsColors(config)
+    let colors = keys(a:config)
+    augroup devicons_colors
+      autocmd!
+      for color in colors
+        exec 'autocmd FileType nerdtree,startify highlight devicons_'.color.' guifg='.g:drc.gui[color].' ctermfg='.g:drc.cterm[color]
+        exec 'autocmd FileType nerdtree,startify syntax match devicons_'.color.' /\v'.join(a:config[color], '|').'/ containedin=ALL'
+      endfor
+    augroup END
+  endfunction
+
+  call s:DeviconsColors(g:devicons_colors)
+
+  function! s:GetVisualSelection()
     " Why is this not a built-in Vim script function?!
     let [line_start, column_start] = getpos("'<")[1:2]
     let [line_end, column_end] = getpos("'>")[1:2]

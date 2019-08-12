@@ -5,7 +5,7 @@ battery50=''
 battery75=''
 battery100=''
 
-acConnectionIcon='ﮣ'
+acConnectionIcon=' ﮣ '
 
 batteryCharge=`pmset -g batt | tail -n -1 | awk '{printf "%d", $3}'`
 powerWattage=`pmset -g ac | head -n 1 | awk '{printf "%d", $3}'`
@@ -23,4 +23,4 @@ else
   icon=$battery0
 fi
 
-printf "$icon  $batteryCharge%% %s %s%s\n" $( [ $powerWattage -gt 0 ] && echo "$acConnectionIcon $powerWattage W")
+printf "$icon  $batteryCharge%%%s%s%s\n" $( [ $powerWattage -gt 0 ] && echo "$acConnectionIcon $powerWattage W")
