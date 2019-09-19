@@ -160,7 +160,7 @@ call plug#begin('~/.vim/plugged')
   let g:codi#autoclose = 1
   let g:codi#width = 80
   let g:codi#rightsplit = 0
-" }
+  " }
 "
 "
 "
@@ -203,6 +203,14 @@ call plug#begin('~/.vim/plugged')
 "
 "
 "
+" [vim startup screen]: {
+" ------------------------
+  Plug 'mhinz/vim-startify' "better vim startup screen
+" ------------------------
+  let g:startify_change_to_dir = 0
+" }
+"
+"
   Plug 'tpope/vim-fugitive' " git
   Plug 'pangloss/vim-javascript'
   Plug 'mxw/vim-jsx'
@@ -216,7 +224,6 @@ call plug#begin('~/.vim/plugged')
   Plug 'jiangmiao/auto-pairs' "insert or delete brackets, parens, quotes in pair.
   Plug 'easymotion/vim-easymotion' "you should know this
   Plug 'chrisbra/unicode.vim'
-  Plug 'mhinz/vim-startify' "better vim startup screen
   Plug 'junegunn/goyo.vim' "ZEN mode
   " Plug 'tmux-plugins/vim-tmux-focus-events'
   " Plug 'dNitro/vim-pug-complete', { 'for': ['jade', 'pug'] }
@@ -229,6 +236,8 @@ call plug#end()
 "-------------------------------------------------------------------
 "
 " [UI setup]: {
+  " hide statusline for NerdTree
+  let g:NERDTreeStatusline = '%#NonText#'
   let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
   let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
   let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"

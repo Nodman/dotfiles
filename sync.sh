@@ -9,6 +9,7 @@ cp ~/.tmux.conf ./tmux/;
 
 cp ~/tmux-256color.terminfo ./shell;
 cp ~/xterm-256color-italic.terminfo ./shell;
+cp ~/info.sh ./shell;
 
 cp ~/bin/getBatteryStats.sh ./bin;
 cp ~/bin/getCpuUsage.sh ./bin;

@@ -32,7 +32,7 @@ source $HOME/.zshenv
 
 # Pure theme settings
 autoload -U promptinit; promptinit
-prompt pure
+prompt purer
 PURE_PROMPT_SYMBOL=➜
 
 # 10ms for key sequences
