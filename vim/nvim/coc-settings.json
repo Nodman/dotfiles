@@ -1,13 +1,0 @@
-{
-  "suggest.echodocSupport": true,
-  "suggest.maxCompleteItemCount": 20,
-  "diagnostic.signOffset": 9999999,
-  "eslint.filetypes": ["javascript", "typescript", "typescriptreact", "javascriptreact", "typescript.tsx"],
-  "diagnostic.errorSign": " ",
-  "diagnostic.checkCurrentLine": true,
-  "diagnostic.warningSign": " !",
-  "diagnostic.infoSign": "  ",
-  "diagnostic.displayByAle": false,
-  "javascript.suggest.enabled": false,
-  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false
-}
