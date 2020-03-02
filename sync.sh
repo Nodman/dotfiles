@@ -12,5 +12,6 @@ cp ~/info.sh ./shell;
 
 cp ~/applescript/spotify.scpt ./applescript;
 
+git add .
 git commit -am "$@";
 git push;
