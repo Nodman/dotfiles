@@ -1,3 +1,6 @@
+set runtimepath^=~/.vim runtimepath+=~/.vim/after
+let &packpath=&runtimepath
+
 call plug#begin('~/.vim/plugged')
 " [Status line plugin, super minimal]: {
   "--------------------------
@@ -293,8 +296,6 @@ call plug#end()
 "-------------------------------------------------------------------
 "-------------------------------------------------------------------
 "
-  set runtimepath^=~/.vim runtimepath+=~/.vim/after
-  let &packpath=&runtimepath
 "
 " [UI setup]: {
   " hide statusline for NerdTree
