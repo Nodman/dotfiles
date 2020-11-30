@@ -2,9 +2,13 @@ git pull;
 
 cp ~/.zshrc ./zsh/;
 
-cp -r ~/.config/nvim/ ./vim;
+rm -rf ./nvim
+cp -r ~/.config/nvim/ ./nvim;
+rm -rf ./nvim/plugged
 
 cp ~/.tmux.conf ./tmux/;
+
+cp -r ~/bin ./;
 
 cp ~/tmux-256color.terminfo ./shell;
 cp ~/xterm-256color-italic.terminfo ./shell;
@@ -13,5 +17,5 @@ cp ~/info.sh ./shell;
 cp ~/applescript/spotify.scpt ./applescript;
 
 git add .
-git commit -am "$@";
+git commit -am "sync $@";
 git push;

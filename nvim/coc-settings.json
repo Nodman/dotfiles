@@ -1,0 +1,81 @@
+{
+  "tsserver.enableJavascript": false,
+  "javascript.suggest.enabled": false,
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
+  "suggest.echodocSupport": true,
+  "suggest.maxCompleteItemCount": 20,
+  "eslint.filetypes": ["javascript", "typescript", "typescriptreact", "javascriptreact", "typescript.tsx", "javascript.jsx"],
+  "diagnostic.enableSign": true,
+  "diagnostic.signOffset": 1000,
+  "diagnostic.maxWindowHeight": 20,
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.enableHighlightLineNumber": true,
+  "diagnostic.errorSign": "",
+  "diagnostic.warningSign": "",
+  "diagnostic.infoSign": "",
+  "diagnostic.displayByAle": false,
+  "diagnostic.virtualText": false,
+  "diagnostic.enableMessage": "always",
+  "diagnostic.level": "warning",
+  "diagnostic.messageTarget": "float",
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "jest.terminalPosition": "bottom",
+  "explorer.previewAction.onHover": false,
+  "explorer.icon.enableNerdfont": true,
+  "explorer.keyMappings": {
+    "<cr>": [
+      "expandable?",
+      ["expanded?", "collapse", "expand"],
+      "open"
+    ],
+    "s": "open:vsplit",
+    "E": "open:split"
+  },
+  "explorer.file.showHiddenFiles": true,
+  "explorer.icon.customIcons": {
+    "icons": {
+      "nodejs": {
+        "code": "",
+        "color": "#9c371e"
+      },
+      "svg": {
+        "code": "",
+        "color": "#f7de39"
+      },
+      "less": {
+        "code": "",
+        "color": "#5fe868"
+      },
+      "lock": {
+        "code": "",
+        "color": "#9c371e"
+      }
+    },
+    "extensions": {
+      "less": "less"
+    },
+    "filenames": {},
+    "dirnames": {
+      "node_modules": "nodejs"
+    },
+    "patternMatches": {},
+    "dirPatternMatches": {}
+  },
+  "languageserver": {
+    "flow": {
+      "command": "node_modules/.bin/flow",
+      "args": ["lsp"],
+      "filetypes": ["javascript", "javascriptreact"],
+      "initializationOptions": {},
+      "requireRootPattern": true,
+      "settings": {},
+      "rootPatterns": [".flowconfig"],
+      "trace.server": "verbose"
+    }
+  },
+  "prettier.eslintIntegration": true,
+  "prettier.stylelintIntegration": true,
+  "coc.preferences.colorSupport": false
+}

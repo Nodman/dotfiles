@@ -4,7 +4,8 @@
 # Path to your oh-my-zsh installation.
 # Greetings
 echo "May the force be with you, `logname`!"
-export LC_ALL=en_GB
+ export LC_ALL=en_GB.UTF-8  
+export LANG=en_GB.UTF-8
 export ZSH=/Users/spooner/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
@@ -24,7 +25,6 @@ plugins=(
   npm
   wd
   vi-mode
-  zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -45,9 +45,17 @@ alias py2="python"
 alias py3="python3"
 alias tmux="tmux -u"
 alias ssh='TERM=xterm-256color ssh'
-alias s="spotify"
 alias vim="nvim"
 alias vi="nvim"
+alias scr="screen"
+alias tsm="transmission-remote"
+
+#shpotify
+alias s="spotify"
+alias play="spotify play"
+alias stop="spotify stop"
+alias pause="spotify pause"
+alias replay="spotify replay"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
@@ -84,3 +92,4 @@ _fzf_complete_git_post() {
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
