@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =5
+let g:netrw_dirhist_5='/Users/spooner/.config/nvim'
+let g:netrw_dirhist_4='/Users/spooner/repos/resnet/packages/psi/src/components/filters'
+let g:netrw_dirhist_3='/Users/spooner/repos/resnet/packages/psi/src/components'
+let g:netrw_dirhist_2='/Users/spooner/repos/resnet/packages/psi/src'
+let g:netrw_dirhist_1='/Users/spooner/repos/resnet/packages/psi'

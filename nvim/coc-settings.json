@@ -6,7 +6,6 @@
   "suggest.maxCompleteItemCount": 20,
   "eslint.filetypes": ["javascript", "typescript", "typescriptreact", "javascriptreact", "typescript.tsx", "javascript.jsx"],
   "diagnostic.enableSign": true,
-  "diagnostic.signOffset": 1000,
   "diagnostic.maxWindowHeight": 20,
   "diagnostic.checkCurrentLine": true,
   "diagnostic.enableHighlightLineNumber": true,
@@ -24,7 +23,7 @@
   "jest.terminalPosition": "bottom",
   "explorer.previewAction.onHover": false,
   "explorer.icon.enableNerdfont": true,
-  "explorer.keyMappings": {
+  "explorer.keyMappings.global": {
     "<cr>": [
       "expandable?",
       ["expanded?", "collapse", "expand"],
@@ -63,19 +62,7 @@
     "patternMatches": {},
     "dirPatternMatches": {}
   },
-  "languageserver": {
-    "flow": {
-      "command": "node_modules/.bin/flow",
-      "args": ["lsp"],
-      "filetypes": ["javascript", "javascriptreact"],
-      "initializationOptions": {},
-      "requireRootPattern": true,
-      "settings": {},
-      "rootPatterns": [".flowconfig"],
-      "trace.server": "verbose"
-    }
-  },
   "prettier.eslintIntegration": true,
   "prettier.stylelintIntegration": true,
-  "coc.preferences.colorSupport": false
+  "coc.preferences.colorSupport": true
 }

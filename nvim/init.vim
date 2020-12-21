@@ -30,7 +30,7 @@ call plug#begin()
   Plug 'JamshedVesuna/vim-markdown-preview'        " md preview
   Plug 'tpope/vim-rhubarb'                         " GitHub
   Plug 'mbbill/undotree'
-  " Plug 'wakatime/vim-wakatime'                   " wakatime tracker
+  Plug 'wakatime/vim-wakatime'                     " wakatime tracker
 "==================================================
   Plug 'neoclide/coc.nvim', {'branch': 'release'}  " Completion and linting
   let g:coc_global_extensions = [
@@ -80,8 +80,8 @@ let comment_gui_fg_color = GetGroupHighlightColor('Comment', 'fg')
 let vim_markdown_preview_github=1
 "==================================================
 " UI
-let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"               " support italics inside tmux
-let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+" let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"               " support italics inside tmux
+" let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
 " remove ~ at the end of the bufer
 set fcs=eob:\ 
 " get comment color and set it for vertical separator
@@ -91,9 +91,12 @@ hi CocUnderline guifg=red gui=undercurl term=undercurl
 hi CocErrorHighlight guifg=pink gui=undercurl,italic term=undercurl
 hi CocWarningHighlight ctermfg=yellow guifg=orange gui=undercurl term=undercurl
 hi SpellBad  gui=undercurl guisp=red term=undercurl cterm=undercurl
+highlight SpelunkerSpellBad cterm=undercurl ctermfg=247 gui=undercurl guifg=#9e9e9e
 " tweak coc-explorer colors
 hi CocExplorerFileDirectory guifg=#ffffff
 hi CocErrorSign guifg=#d1666a
+" adjsut paren match style
+hi MatchParen cterm=bold gui=bold
 execute 'hi CocExplorerFileDirectoryCollapsed guifg=' . comment_gui_fg_color
 execute 'hi CocExplorerFileDirectoryExpanded guifg=' . comment_gui_fg_color
 execute 'hi CocExplorerFileRootName guifg=' . comment_gui_fg_color
@@ -242,13 +245,15 @@ nmap <silent>gi <Plug>(coc-implementation)
 nmap <silent>gr <Plug>(coc-references)
 " select completion with C-l
 inoremap <expr><C-l> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent> <space>d  :<C-u>CocList diagnostics<cr>
 " Show commands
 nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
 " Find symbol of current document
 nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 " Search workspace symbols
 nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Actions popup
+nnoremap <silent> <space>a  :<C-u>CocAction<cr>
 function! s:check_backspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
@@ -276,7 +281,7 @@ nnoremap <leader>te :call CocAction('runCommand', 'jest.singleTest')<CR>
 autocmd! User GoyoLeave nested call GoyoLeave()
 augroup spelunker
   " Setting for g:spelunker_check_type = 2:
-  autocmd CursorHold *.js,*.jsx,*.json,*.md call spelunker#check_displayed_words()
+  autocmd CursorHold *.ts,*tsx,*.js,*.jsx,*.json,*.md call spelunker#check_displayed_words()
 augroup END
 
 "==================================================
