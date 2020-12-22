@@ -9,6 +9,9 @@ rm -rf ./nvim/plugged
 rm -rf ./kitty
 cp -r ~/.config/kitty ./
 
+rm -rf ./hammerspoon
+cp -r ~/.hammerspoon ./
+
 cp ~/.tmux.conf ./tmux/
 
 cp -r ~/bin ./

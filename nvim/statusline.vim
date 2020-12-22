@@ -1,9 +1,16 @@
 set noshowcmd
 set laststatus=2
+
+let colors_by_theme = {
+  \ 'dracula': { 'text': '#d1d1fd', 'text_right': '#55557a' },
+  \ 'nord': { 'text': '#8FBCBB', 'text_right': '#4C566A' }
+\}
+
 hi statusline guibg=NONE
 hi statuslinenc guibg=NONE
-hi statusline_text guibg=NONE guifg=#d1d1fd
-hi statusline_text_right guibg=NONE guifg=#55557a
+
+execute 'hi statusline_text guibg=NONE guifg=' . colors_by_theme[g:colors_name]['text']
+execute 'hi statusline_text_right guibg=NONE guifg=' . colors_by_theme[g:colors_name]['text_right']
 
 " let g:branchname_w_icon = ''
 let g:last_mode = ''

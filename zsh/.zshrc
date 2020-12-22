@@ -94,4 +94,5 @@ _fzf_complete_git_post() {
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-export BAT_THEME="Dracula"
+# export BAT_THEME="Dracula"
+export BAT_THEME="Nord"

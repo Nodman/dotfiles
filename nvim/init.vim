@@ -62,11 +62,13 @@ call plug#begin()
 " }
 "==================================================
   Plug 'dracula/vim', {'as': 'dracula'}            " DRACULA THEME
+  Plug 'arcticicestudio/nord-vim'
 
 call plug#end()
 "==================================================
 " COLOR SCEHEME
-colorscheme dracula
+" colorscheme dracula
+colorscheme nord
 set termguicolors                                  " use true colors
 "==================================================
 " LOAD CONFIG PARTS
@@ -101,6 +103,14 @@ execute 'hi CocExplorerFileDirectoryCollapsed guifg=' . comment_gui_fg_color
 execute 'hi CocExplorerFileDirectoryExpanded guifg=' . comment_gui_fg_color
 execute 'hi CocExplorerFileRootName guifg=' . comment_gui_fg_color
 
+" Customize fzf colors to match your color scheme
+" - fzf#wrap translates this to a set of `--color` options
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'gutter':  ['bg', 'Normal'],
+  \ 'bg+':     ['bg', 'Normal'],
+  \ 'border':  ['fg', 'Comment']}
+
 " GENERAL SETTINGS
 set pyxversion=3                         " pythonx version
 set cursorline                           " highlight current line
@@ -108,7 +118,7 @@ set expandtab                            " Insert spaces when TAB is pressed.
 set tabstop=2                            " Render TABs using this many spaces.
 set shiftwidth=2                         " Indentation amount for < and > commands.
 set signcolumn=yes:1                     " enable sign columns
-set numberwidth=2                        " linen umbers columns width
+set numberwidth=2                        " lines umbers columns width
 set rnu                                  " enable line numbers (relative)
 set updatetime=100                       " mainly for cursor hold
 set backspace=indent,eol,start           " Allow backspace over everything in insert mode.
