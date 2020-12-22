@@ -26,7 +26,7 @@ function! Modified()
 endfunction
 
 function! BufNum()
-  return ' ' . len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
+  return 'B: ' . len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
 endfunction
 function! StatusDiagnostic() abort
   let info = get(b:, 'coc_diagnostic_info', {})
@@ -118,12 +118,13 @@ set statusline+=\ %#statusline_text#%t\ [%n]%{Modified()}%<
 " Right Side
 set statusline+=%=%#statusline_text_right#
 set statusline+=%{StatusDiagnostic()}%{get(b:,'coc_current_function','')}\ 
-set statusline+=\ %y
+set statusline+=\ %#statusline_text#%y%#statusline_text_right#
 set statusline+=\ %p%%
-set statusline+=\ %l:%c\ 
+set statusline+=\ %l:%c\ %#statusline_text#•\ %#statusline_text_right#
 
 set statusline+=%{BufNum()}
-set statusline+=\ •\ \ %{strftime('%H:%M')}
+" time
+" set statusline+=\ •\ \ %{strftime('%H:%M')}
 
 " autocmd! FocusGained,BufEnter * call <SID>GitBranch()
 " autocmd! BufEnter,BufWinEnter,WinEnter,CmdwinEnter * call ClearStatusLine('[coc-explorer]-1')

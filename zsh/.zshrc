@@ -99,7 +99,6 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Change cursor with support for inside/outside tmux
 bindkey -v
-export KEYTIMEOUT=1
 
 function _set_cursor() {
     if [[ $TMUX = '' ]]; then

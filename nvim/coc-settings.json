@@ -23,14 +23,14 @@
   "jest.terminalPosition": "bottom",
   "explorer.previewAction.onHover": false,
   "explorer.icon.enableNerdfont": true,
-  "explorer.keyMappings.global": {
+  "explorer.keyMappings": {
     "<cr>": [
       "expandable?",
       ["expanded?", "collapse", "expand"],
       "open"
     ],
-    "s": "open:vsplit",
-    "E": "open:split"
+    "v": "open:vsplit",
+    "s": "open:split"
   },
   "explorer.file.showHiddenFiles": true,
   "explorer.icon.customIcons": {

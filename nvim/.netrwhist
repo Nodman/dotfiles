@@ -1,5 +1,9 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =5
+let g:netrw_dirhistcnt =9
+let g:netrw_dirhist_9='/Users/spooner/.config/nvim'
+let g:netrw_dirhist_8='/Users/spooner/repos/sa/samw/src/ui/Tables/Table'
+let g:netrw_dirhist_7='/Users/spooner/repos/sa/samw/src/ui/Composite/ScreenerList'
+let g:netrw_dirhist_6='/Users/spooner/repos/sa/samw/src/screens/Comparison/ComparisonList/ComparisonList'
 let g:netrw_dirhist_5='/Users/spooner/.config/nvim'
 let g:netrw_dirhist_4='/Users/spooner/repos/resnet/packages/psi/src/components/filters'
 let g:netrw_dirhist_3='/Users/spooner/repos/resnet/packages/psi/src/components'
