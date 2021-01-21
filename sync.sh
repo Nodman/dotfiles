@@ -5,6 +5,7 @@ cp ~/.zshrc ./zsh/
 rm -rf ./nvim
 cp -r ~/.config/nvim ./
 rm -rf ./nvim/plugged
+rm ./nvim/.netrwhist
 
 rm -rf ./kitty
 cp -r ~/.config/kitty ./
