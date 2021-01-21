@@ -23,7 +23,7 @@
   "jest.terminalPosition": "bottom",
   "explorer.previewAction.onHover": false,
   "explorer.icon.enableNerdfont": true,
-  "explorer.keyMappings": {
+  "explorer.keyMappings.global": {
     "<cr>": [
       "expandable?",
       ["expanded?", "collapse", "expand"],
