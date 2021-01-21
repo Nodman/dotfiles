@@ -1,4 +1,4 @@
-hs.hotkey.bind({"ctrl"}, "`", function()
+hs.hotkey.bind({"ctrl"}, "escape", function()
   local app = hs.application.get("kitty")
   if app then
       if not app:mainWindow() then

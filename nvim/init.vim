@@ -165,6 +165,15 @@ inoremap <C-Space> <Nop>
 nnoremap <C-Space> <Nop>
 " faster enter command
 nnoremap ; :
+" move in insert mode
+inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
+cnoremap <C-h> <Left>
+cnoremap <C-j> <Down>
+cnoremap <C-k> <Up>
+cnoremap <C-l> <Right>
 " faster vimrc access
 map <leader>fed :e $MYVIMRC<CR>
 " reload vim config
@@ -264,6 +273,8 @@ nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
 nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
 " Actions popup
 nnoremap <silent> <space>a  :<C-u>CocAction<cr>
+" Rename file
+nnoremap <silent> <space>rf :<C-u>CocCommand workspace.renameCurrentFile<cr>
 function! s:check_backspace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'

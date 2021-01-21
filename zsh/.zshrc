@@ -4,7 +4,7 @@
 # Path to your oh-my-zsh installation.
 # Greetings
 echo "May the force be with you, `logname`!"
- export LC_ALL=en_GB.UTF-8  
+export LC_ALL=en_GB.UTF-8
 export LANG=en_GB.UTF-8
 export ZSH=/Users/spooner/.oh-my-zsh
 
@@ -37,6 +37,11 @@ PURE_PROMPT_SYMBOL=➜
 
 # 10ms for key sequences
 KEYTIMEOUT=1
+
+autoload -Uz compinit
+compinit
+# Completion for kitty
+kitty + complete setup zsh | source /dev/stdin
 
 # Aliases
 alias reload="source $HOME/.zshrc"
