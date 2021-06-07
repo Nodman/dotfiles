@@ -1,29 +1,19 @@
 {
-  "tsserver.enableJavascript": false,
+  "tsserver.enableJavascript": true,
   "javascript.suggest.enabled": false,
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyParenthesis": false,
-  "suggest.echodocSupport": true,
-  "suggest.maxCompleteItemCount": 20,
-  "eslint.filetypes": ["javascript", "typescript", "typescriptreact", "javascriptreact", "typescript.tsx", "javascript.jsx"],
   "diagnostic.enableSign": true,
-  "diagnostic.maxWindowHeight": 20,
+  "diagnostic.enableHighlightLineNumber": false,
+  "diagnostic.errorSign": "",
+  "diagnostic.warningSign": "",
+  "diagnostic.infoSign": "",
+  "diagnostic.level": "hint",
   "diagnostic.checkCurrentLine": true,
-  "diagnostic.enableHighlightLineNumber": true,
-  "diagnostic.errorSign": "",
-  "diagnostic.warningSign": "",
-  "diagnostic.infoSign": "",
-  "diagnostic.displayByAle": false,
   "diagnostic.virtualText": false,
+  "diagnostic.virtualTextCurrentLineOnly": true,
+  "diagnostic.virtualTextLines": 1,
   "diagnostic.enableMessage": "always",
-  "diagnostic.level": "warning",
-  "diagnostic.messageTarget": "float",
-  "css.validate": false,
-  "less.validate": false,
-  "scss.validate": false,
-  "jest.terminalPosition": "bottom",
-  "explorer.previewAction.onHover": false,
-  "explorer.icon.enableNerdfont": true,
-  "explorer.keyMappings": {
+  "explorer.keyMappings.global": {
     "<cr>": [
       "expandable?",
       ["expanded?", "collapse", "expand"],
@@ -33,36 +23,10 @@
     "s": "open:split"
   },
   "explorer.file.showHiddenFiles": true,
-  "explorer.icon.customIcons": {
-    "icons": {
-      "nodejs": {
-        "code": "",
-        "color": "#9c371e"
-      },
-      "svg": {
-        "code": "",
-        "color": "#f7de39"
-      },
-      "less": {
-        "code": "",
-        "color": "#5fe868"
-      },
-      "lock": {
-        "code": "",
-        "color": "#9c371e"
-      }
-    },
-    "extensions": {
-      "less": "less"
-    },
-    "filenames": {},
-    "dirnames": {
-      "node_modules": "nodejs"
-    },
-    "patternMatches": {},
-    "dirPatternMatches": {}
-  },
+  "explorer.buffer.tabOnly": true,
+  "explorer.icon.enableNerdfont": true,
+  "explorer.buffer.showHiddenBuffers": true,
+  "Lua.diagnostics.globals": ["vim"],
   "prettier.eslintIntegration": true,
-  "prettier.stylelintIntegration": true,
-  "coc.preferences.colorSupport": true
+  "prettier.stylelintIntegration": true
 }
